@@ -13,12 +13,16 @@ var task = function(request, callback){
 	var policyData = helpers.readJSONFile(POLICY_FILE);
     //callback(null, "Hello" + request.params.name);
 	//2. prepare policy
+	policyData.conditions.push({"x-amz-meta-address": request.ip});
+	policyData.conditions.push({"x-amz-meta-firstname":"Damian"});
+	policyData.conditions.push({"x-amz-meta-lastname": "Spinek"});
 	var policy = new Policy(policyData);
 
 	//3. generate form fields for S3 POST
 	var s3Form = new S3Form(policy);
 	var fields = s3Form.generateS3FormFields();
 	s3Form.addS3CredientalsFields(fields, awsConfig);
+
 	//4. get bucket name
 	var bucketName = policyData.conditions[1].bucket;
 
