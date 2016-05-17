@@ -1,4 +1,5 @@
 var util = require("util");
+var AWS = require("aws-sdk");
 var moment = require("moment");
 var helpers = require("./helpers");
 
